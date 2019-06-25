@@ -1,0 +1,102 @@
+{
+  "EDITOR_STATE": {
+    "allProjectFiles": {
+      "d49f6f6f-2501-4953-b356-a07287f1c41b": {
+        "id": "d49f6f6f-2501-4953-b356-a07287f1c41b",
+        "parent": null,
+        "name": "test",
+        "type": "DIRECTORY",
+        "isDirectory": true,
+        "children": [
+          "6289acab-1bda-4531-867b-3494a3e30ae7"
+        ],
+        "isRemovable": false,
+        "filePath": "test"
+      },
+      "6289acab-1bda-4531-867b-3494a3e30ae7": {
+        "id": "6289acab-1bda-4531-867b-3494a3e30ae7",
+        "parent": "d49f6f6f-2501-4953-b356-a07287f1c41b",
+        "name": "lambda.js",
+        "type": "JS_LAMBDA",
+        "isDirectory": false,
+        "children": [],
+        "isRemovable": true,
+        "filePath": "test/lambda.js",
+        "code": "exports.handler = function(event, context, callback) {\n    \n    callback(null, {\"message\": \"Successfully LLL executed\"});\n}",
+        "config": {
+          "runtime": "nodejs8.10",
+          "handler": "handler",
+          "timeout": 60,
+          "memory": 128,
+          "layers": []
+        },
+        "triggers": [
+          {
+            "resourceName": "apigeuCentral1checkindunilqatstany",
+            "config": {}
+          }
+        ]
+      }
+    },
+    "deletedFiles": [],
+    "rootNode": "d49f6f6f-2501-4953-b356-a07287f1c41b",
+    "openFiles": [
+      "6289acab-1bda-4531-867b-3494a3e30ae7"
+    ],
+    "currentFileId": "6289acab-1bda-4531-867b-3494a3e30ae7",
+    "resources": {
+      "apigeuCentral1checkindunilqatstany": {
+        "name": "apigeuCentral1checkindunilqatstany",
+        "type": "API_GATEWAY",
+        "config": {
+          "selectedRegion": "eu-central-1",
+          "apiMode": 0,
+          "apiName": "check",
+          "endpointType": "REGIONAL",
+          "resourceMode": 0,
+          "resourceName": "indunil/qa/tst",
+          "resourcePath": "/indunil/qa/tst",
+          "restMethod": "ANY",
+          "proxyIntegration": false,
+          "enableCORS": false,
+          "stageMode": 0,
+          "stageName": "test",
+          "mode": 0
+        }
+      }
+    },
+    "customTemplate": {
+      "dialect": null,
+      "definitions": {}
+    },
+    "envVariables": [
+      {
+        "lambdaId": "all",
+        "varKey": "SIGMA_AWS_ACC_ID",
+        "varValue": null,
+        "shouldPersist": false,
+        "displayOnly": false,
+        "editable": false
+      }
+    ],
+    "packageJSON": {
+      "dependencies": {}
+    }
+  },
+  "PROJECT_META": {
+    "projectName": "test",
+    "projectDescription": "wet",
+    "projectVersion": "1.0.0",
+    "projectRegion": "eu-central-1",
+    "platform": "AWS",
+    "platformRegions": {},
+    "lastSave": 1561455382162
+  },
+  "VCS_STATE": {
+    "provider": "GitHub",
+    "repo": {
+      "name": "test",
+      "url": "https://github.com/Indunil1992/test"
+    }
+  }
+}
