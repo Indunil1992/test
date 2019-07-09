@@ -22,7 +22,7 @@
         "children": [],
         "isRemovable": true,
         "filePath": "test/lambda.js",
-        "code": "let AWS = require('aws-sdk');\nlet SL_AWS = require('slappforge-sdk-aws');\nconst sqs = new SL_AWS.SQS(AWS);\n\nexports.handler = function (event, context, callback) {\n    sqs.receiveMessage({\n        QueueUrl: `https://sqs.${process.env.AWS_REGION}.amazonaws.com/${process.env.SIGMA_AWS_ACC_ID}/test`,\n        AttributeNames: ['SequenceNumber'],\n        MaxNumberOfMessages: '10',\n        VisibilityTimeout: '30',\n        WaitTimeSeconds: '10',\n        MessageAttributeNames: ['saaaaa', 'kaa']\n    }).promise()\n        .then(receivedMsgData => {\n            if (!!(receivedMsgData) && !!(receivedMsgData.Messages)) {\n                let receivedMessages = receivedMsgData.Messages;\n                receivedMessages.forEach(message => {\n                    // your logic to access each message through out the loop. Each message is available under variable message \n                    // within this block\n                    console.log(\"message\");\n                    console.log(message);\n                });\n            } else {\n                // No messages to process\n                console.log(\"No messages\");\n                // console.log( message );\n            }\n        })\n        .catch(err => {\n            // error handling goes here\n            console.log(\"err\");\n            console.log(err);\n        });\n\n\n\n    callback(null, { \"message\": \"Successfully LLL executed\" });\n}",
+        "code": "let AWS = require('aws-sdk');\nlet SL_AWS = require('slappforge-sdk-aws');\nconst sqs = new SL_AWS.SQS(AWS);\n\n\nexports.handler = function (event, context, callback) {\n\n\n    sqs.sendMessage({\n        MessageBody: 'test',\n        QueueUrl: `https://sqs.${process.env.AWS_REGION}.amazonaws.com/${process.env.SIGMA_AWS_ACC_ID}/new1`,\n        DelaySeconds: '0',\n        MessageAttributes: {}\n    }, function (data) {\n        console.log(\"Success\");\n        console.log(data);\n        // your logic (logging etc) to handle successful message delivery, should be here\n    }, function (error) {\n        console.log(\"not Success\");\n        console.log(error);\n        // your logic (logging etc) to handle failures, should be here\n    });\n\n    callback(null, { \"message\": \"Successfully nw executed\" });\n}",
         "config": {
           "runtime": "nodejs8.10",
           "handler": "handler",
@@ -77,9 +77,62 @@
         "type": "SQS",
         "config": {
           "mode": 0,
-          "existing": false,
+          "existing": true,
           "name": "test",
           "url": "https://sqs.eu-central-1.amazonaws.com/318300609668/test",
+          "selectedRegion": "eu-central-1",
+          "deliveryDelay": 0,
+          "deliveryDelayUnit": "seconds",
+          "useRedrivePolicy": false,
+          "useSSE": false,
+          "kmsCustomerMasterKey": "default",
+          "accountId": "318300609668",
+          "dataKeyReusePeriod": 5,
+          "queueType": "standardQueue",
+          "defaultVisibilityTimeout": 30,
+          "defaultVisibilityTimeoutUnit": "seconds",
+          "messageRetentionPeriod": 4,
+          "messageRetentionPeriodUnit": "days",
+          "maximumMessageSize": 256,
+          "receiveMessageWaitTime": 0,
+          "deadLetterQueueName": "",
+          "createdByApp": true
+        }
+      },
+      "sqsnwput": {
+        "name": "sqsnwput",
+        "type": "SQS",
+        "config": {
+          "mode": 0,
+          "existing": false,
+          "name": "nwput",
+          "url": "https://sqs.eu-central-1.amazonaws.com/318300609668/nwput",
+          "selectedRegion": "eu-central-1",
+          "deliveryDelay": 0,
+          "deliveryDelayUnit": "seconds",
+          "useRedrivePolicy": false,
+          "useSSE": false,
+          "kmsCustomerMasterKey": "default",
+          "accountId": "318300609668",
+          "dataKeyReusePeriod": 5,
+          "queueType": "standardQueue",
+          "defaultVisibilityTimeout": 30,
+          "defaultVisibilityTimeoutUnit": "seconds",
+          "messageRetentionPeriod": 4,
+          "messageRetentionPeriodUnit": "days",
+          "maximumMessageSize": 256,
+          "receiveMessageWaitTime": 0,
+          "deadLetterQueueName": ""
+        }
+      },
+      "sqsnew1": {
+        "name": "sqsnew1",
+        "type": "SQS",
+        "config": {
+          "mode": 0,
+          "existing": false,
+          "name": "new1",
+          "url": "https://sqs.eu-central-1.amazonaws.com/318300609668/new1",
           "selectedRegion": "eu-central-1",
           "deliveryDelay": 0,
           "deliveryDelayUnit": "seconds",
@@ -372,7 +425,7 @@
     "projectRegion": "eu-central-1",
     "platform": "AWS",
     "platformRegions": {},
-    "lastSave": 1562662602727
+    "lastSave": 1562663048606
   },
   "VCS_STATE": {
     "provider": "GitHub",
