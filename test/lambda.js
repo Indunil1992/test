@@ -35,5 +35,5 @@ exports.handler = function (event, context, callback) {
         });
 
 
-    callback(null, { "message": "Successfully executed - put" });
+    callback(null, { "message": "Successfully executed ex put" });
 }
