@@ -22,7 +22,7 @@
         "children": [],
         "isRemovable": true,
         "filePath": "test/lambda.js",
-        "code": "let AWS = require('aws-sdk');\nlet SL_AWS = require('slappforge-sdk-aws');\nconst sqs = new SL_AWS.SQS(AWS);\n\nexports.handler = function (event, context, callback) {\n\n    sqs.receiveAndDeleteMessages({\n        QueueUrl: `https://sqs.${process.env.AWS_REGION}.amazonaws.com/${process.env.SIGMA_AWS_ACC_ID}/check.fifo`,\n        AttributeNames: ['All'],\n        MaxNumberOfMessages: '100',\n        VisibilityTimeout: '50',\n        WaitTimeSeconds: '10',\n        MessageAttributeNames: ['a', 's', 'q']\n    }, function (receivedMessages) {\n        console.log(\"receivedMessages\");\n        console.log(receivedMessages);\n        // implement received message filtering logic here and return filtered set of messages which \n        // are allowed to delete in the next step\n        return receivedMessages;\n    }, function (deleteSuccessData) {\n        console.log(\"deleteSuccessData\");\n        console.log(deleteSuccessData);\n        // implement delete success state here\n    }, function (error) {\n        console.log(\"not Success\");\n        console.log(error);\n        // implement error handling logic here\n    });\n\n\n    callback(null, { \"message\": \"Successfully executed - FIFO nw\" });\n}",
+        "code": "let AWS = require('aws-sdk');\nlet SL_AWS = require('slappforge-sdk-aws');\nconst sqs = new SL_AWS.SQS(AWS);\n\n\nexports.handler = function (event, context, callback) {\n\n    sqs.sendMessage({\n        MessageBody: 'do',\n        QueueUrl: `https://sqs.${process.env.AWS_REGION}.amazonaws.com/${process.env.SIGMA_AWS_ACC_ID}/test`,\n        DelaySeconds: '0',\n        MessageAttributes: {}\n    }, function (data) {\n        console.log(\"Success\");\n                 console.log( data );\n        // your logic (logging etc) to handle successful message delivery, should be here\n    }, function (error) {\n        console.log(\"not Success\");\n                 console.log( error );\n        // your logic (logging etc) to handle failures, should be here\n    });\n\n\n    callback(null, { \"message\": \"Successfully executed - put\" });\n}",
         "config": {
           "runtime": "nodejs8.10",
           "handler": "handler",
@@ -72,30 +72,25 @@
           "mode": 0
         }
       },
-      "sqscheckfifo": {
-        "name": "sqscheckfifo",
+      "sqstest": {
+        "name": "sqstest",
         "type": "SQS",
         "config": {
-          "mode": 0,
-          "existing": false,
-          "name": "check.fifo",
-          "url": "https://sqs.eu-central-1.amazonaws.com/318300609668/check.fifo",
+          "mode": 1,
+          "existing": true,
+          "name": "test",
+          "url": "https://sqs.eu-central-1.amazonaws.com/318300609668/test",
           "selectedRegion": "eu-central-1",
-          "deliveryDelay": 0,
+          "deliveryDelay": "0",
           "deliveryDelayUnit": "seconds",
-          "useRedrivePolicy": false,
-          "useSSE": false,
-          "kmsCustomerMasterKey": "default",
-          "accountId": "318300609668",
-          "dataKeyReusePeriod": 5,
-          "queueType": "fifoQueue",
-          "defaultVisibilityTimeout": 30,
+          "queueType": "standardQueue",
+          "defaultVisibilityTimeout": "30",
           "defaultVisibilityTimeoutUnit": "seconds",
-          "messageRetentionPeriod": 4,
-          "messageRetentionPeriodUnit": "days",
+          "messageRetentionPeriod": "345600",
+          "messageRetentionPeriodUnit": "seconds",
           "maximumMessageSize": 256,
-          "receiveMessageWaitTime": 0,
-          "deadLetterQueueName": ""
+          "receiveMessageWaitTime": "0",
+          "queueARN": "arn:aws:sqs:eu-central-1:318300609668:test"
         }
       }
     },
@@ -372,7 +367,7 @@
     "projectRegion": "eu-central-1",
     "platform": "AWS",
     "platformRegions": {},
-    "lastSave": 1562669211312
+    "lastSave": 1562670954354
   },
   "VCS_STATE": {
     "provider": "GitHub",
