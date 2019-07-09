@@ -22,7 +22,7 @@
         "children": [],
         "isRemovable": true,
         "filePath": "test/lambda.js",
-        "code": "let AWS = require('aws-sdk');\nlet SL_AWS = require('slappforge-sdk-aws');\nconst sqs = new SL_AWS.SQS(AWS);\n\nexports.handler = function (event, context, callback) {\n\n    sqs.receiveAndDeleteMessages({\n        QueueUrl: `https://sqs.${process.env.AWS_REGION}.amazonaws.com/${process.env.SIGMA_AWS_ACC_ID}/check.fifo`,\n        AttributeNames: ['All'],\n        MaxNumberOfMessages: '10',\n        VisibilityTimeout: '50',\n        WaitTimeSeconds: '10',\n        MessageAttributeNames: ['a', 'b']\n    }, function (receivedMessages) {\n        console.log(\"receivedMessages\");\n                 console.log( receivedMessages );\n        // implement received message filtering logic here and return filtered set of messages which \n        // are allowed to delete in the next step\n        return receivedMessages;\n    }, function (deleteSuccessData) {\n        console.log(\"deleteSuccessData\");\n                 console.log( deleteSuccessData );\n        // implement delete success state here\n    }, function (error) {\n        console.log(\"not Success\");\n                 console.log( error );\n        // implement error handling logic here\n    });\n\n\n    callback(null, { \"message\": \"Successfully executed - FIFO nw\" });\n}",
+        "code": "let AWS = require('aws-sdk');\nlet SL_AWS = require('slappforge-sdk-aws');\nconst sqs = new SL_AWS.SQS(AWS);\n\nexports.handler = function (event, context, callback) {\n\n    sqs.receiveAndDeleteMessages({\n        QueueUrl: `https://sqs.${process.env.AWS_REGION}.amazonaws.com/${process.env.SIGMA_AWS_ACC_ID}/check.fifo`,\n        AttributeNames: ['All'],\n        MaxNumberOfMessages: '5',\n        VisibilityTimeout: '30',\n        WaitTimeSeconds: '10',\n        MessageAttributeNames: ['']\n    }, function (receivedMessages) {\n        console.log(\"receivedMessages\");\n        console.log(receivedMessages);\n        // implement received message filtering logic here and return filtered set of messages which \n        // are allowed to delete in the next step\n        return receivedMessages;\n    }, function (deleteSuccessData) {\n        console.log(\"deleteSuccessData\");\n        console.log(deleteSuccessData);\n        // implement delete success state here\n    }, function (error) {\n        console.log(\"not Success\");\n        console.log(error);\n        // implement error handling logic here\n    });\n\n\n    callback(null, { \"message\": \"Successfully executed - FIFO nw\" });\n}",
         "config": {
           "runtime": "nodejs8.10",
           "handler": "handler",
@@ -95,8 +95,7 @@
           "messageRetentionPeriodUnit": "days",
           "maximumMessageSize": 256,
           "receiveMessageWaitTime": 0,
-          "deadLetterQueueName": "",
-          "contentBasedDeduplication": false
+          "deadLetterQueueName": ""
         }
       }
     },
@@ -373,7 +372,7 @@
     "projectRegion": "eu-central-1",
     "platform": "AWS",
     "platformRegions": {},
-    "lastSave": 1562667787084
+    "lastSave": 1562668775275
   },
   "VCS_STATE": {
     "provider": "GitHub",
