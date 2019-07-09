@@ -7,10 +7,10 @@ exports.handler = function (event, context, callback) {
     sqs.receiveAndDeleteMessages({
         QueueUrl: `https://sqs.${process.env.AWS_REGION}.amazonaws.com/${process.env.SIGMA_AWS_ACC_ID}/check.fifo`,
         AttributeNames: ['All'],
-        MaxNumberOfMessages: '5',
-        VisibilityTimeout: '30',
+        MaxNumberOfMessages: '100',
+        VisibilityTimeout: '50',
         WaitTimeSeconds: '10',
-        MessageAttributeNames: ['']
+        MessageAttributeNames: ['a', 's', 'q']
     }, function (receivedMessages) {
         console.log("receivedMessages");
         console.log(receivedMessages);
