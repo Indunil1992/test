@@ -22,7 +22,7 @@
         "children": [],
         "isRemovable": true,
         "filePath": "test/lambda.js",
-        "code": "let AWS = require('aws-sdk');\nlet SL_AWS = require('slappforge-sdk-aws');\nconst sqs = new SL_AWS.SQS(AWS);\n\n\nexports.handler = function (event, context, callback) {\n\n\n    sqs.sendMessage({\n        MessageBody: 'test',\n        QueueUrl: `https://sqs.${process.env.AWS_REGION}.amazonaws.com/${process.env.SIGMA_AWS_ACC_ID}/new1`,\n        DelaySeconds: '0',\n        MessageAttributes: {}\n    }, function (data) {\n        console.log(\"Success\");\n        console.log(data);\n        // your logic (logging etc) to handle successful message delivery, should be here\n    }, function (error) {\n        console.log(\"not Success\");\n        console.log(error);\n        // your logic (logging etc) to handle failures, should be here\n    });\n\n    callback(null, { \"message\": \"Successfully nw executed\" });\n}",
+        "code": "let AWS = require('aws-sdk');\nlet SL_AWS = require('slappforge-sdk-aws');\nconst sqs = new SL_AWS.SQS(AWS);\n\nexports.handler = function (event, context, callback) {\n\n    sqs.sendMessage({\n        MessageBody: 'indu1',\n        QueueUrl: `https://sqs.${process.env.AWS_REGION}.amazonaws.com/${process.env.SIGMA_AWS_ACC_ID}/test2.fifo`,\n        DelaySeconds: '0',\n        MessageDeduplicationId: '1',\n        MessageAttributes: {}\n    }, function (data) {\n         console.log(\"Success\");\n                 console.log( data );\n        // your logic (logging etc) to handle successful message delivery, should be here\n    }, function (error) {\n         console.log(\"not Success\");\n                 console.log( error );\n\n        // your logic (logging etc) to handle failures, should be here\n    });\n\n\n\n    callback(null, { \"message\": \"Successfully nw2 executed\" });\n}",
         "config": {
           "runtime": "nodejs8.10",
           "handler": "handler",
@@ -72,14 +72,14 @@
           "mode": 0
         }
       },
-      "sqstest": {
-        "name": "sqstest",
+      "sqstest2fifo": {
+        "name": "sqstest2fifo",
         "type": "SQS",
         "config": {
           "mode": 0,
-          "existing": true,
-          "name": "test",
-          "url": "https://sqs.eu-central-1.amazonaws.com/318300609668/test",
+          "existing": false,
+          "name": "test2.fifo",
+          "url": "https://sqs.eu-central-1.amazonaws.com/318300609668/test2.fifo",
           "selectedRegion": "eu-central-1",
           "deliveryDelay": 0,
           "deliveryDelayUnit": "seconds",
@@ -88,7 +88,7 @@
           "kmsCustomerMasterKey": "default",
           "accountId": "318300609668",
           "dataKeyReusePeriod": 5,
-          "queueType": "standardQueue",
+          "queueType": "fifoQueue",
           "defaultVisibilityTimeout": 30,
           "defaultVisibilityTimeoutUnit": "seconds",
           "messageRetentionPeriod": 4,
@@ -96,59 +96,7 @@
           "maximumMessageSize": 256,
           "receiveMessageWaitTime": 0,
           "deadLetterQueueName": "",
-          "createdByApp": true
-        }
-      },
-      "sqsnwput": {
-        "name": "sqsnwput",
-        "type": "SQS",
-        "config": {
-          "mode": 0,
-          "existing": false,
-          "name": "nwput",
-          "url": "https://sqs.eu-central-1.amazonaws.com/318300609668/nwput",
-          "selectedRegion": "eu-central-1",
-          "deliveryDelay": 0,
-          "deliveryDelayUnit": "seconds",
-          "useRedrivePolicy": false,
-          "useSSE": false,
-          "kmsCustomerMasterKey": "default",
-          "accountId": "318300609668",
-          "dataKeyReusePeriod": 5,
-          "queueType": "standardQueue",
-          "defaultVisibilityTimeout": 30,
-          "defaultVisibilityTimeoutUnit": "seconds",
-          "messageRetentionPeriod": 4,
-          "messageRetentionPeriodUnit": "days",
-          "maximumMessageSize": 256,
-          "receiveMessageWaitTime": 0,
-          "deadLetterQueueName": ""
-        }
-      },
-      "sqsnew1": {
-        "name": "sqsnew1",
-        "type": "SQS",
-        "config": {
-          "mode": 0,
-          "existing": false,
-          "name": "new1",
-          "url": "https://sqs.eu-central-1.amazonaws.com/318300609668/new1",
-          "selectedRegion": "eu-central-1",
-          "deliveryDelay": 0,
-          "deliveryDelayUnit": "seconds",
-          "useRedrivePolicy": false,
-          "useSSE": false,
-          "kmsCustomerMasterKey": "default",
-          "accountId": "318300609668",
-          "dataKeyReusePeriod": 5,
-          "queueType": "standardQueue",
-          "defaultVisibilityTimeout": 30,
-          "defaultVisibilityTimeoutUnit": "seconds",
-          "messageRetentionPeriod": 4,
-          "messageRetentionPeriodUnit": "days",
-          "maximumMessageSize": 256,
-          "receiveMessageWaitTime": 0,
-          "deadLetterQueueName": ""
+          "contentBasedDeduplication": false
         }
       }
     },
@@ -425,7 +373,7 @@
     "projectRegion": "eu-central-1",
     "platform": "AWS",
     "platformRegions": {},
-    "lastSave": 1562663048606
+    "lastSave": 1562663401888
   },
   "VCS_STATE": {
     "provider": "GitHub",
