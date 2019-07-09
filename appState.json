@@ -22,7 +22,7 @@
         "children": [],
         "isRemovable": true,
         "filePath": "test/lambda.js",
-        "code": "exports.handler = function(event, context, callback) {\n    \n    callback(null, {\"message\": \"Successfully LLL executed\"});\n}",
+        "code": "let AWS = require('aws-sdk');\nlet SL_AWS = require('slappforge-sdk-aws');\nconst sqs = new SL_AWS.SQS(AWS);\n\nexports.handler = function (event, context, callback) {\n    sqs.receiveMessage({\n        QueueUrl: `https://sqs.${process.env.AWS_REGION}.amazonaws.com/${process.env.SIGMA_AWS_ACC_ID}/test`,\n        AttributeNames: ['All'],\n        MaxNumberOfMessages: '100',\n        VisibilityTimeout: '30',\n        WaitTimeSeconds: '0'\n    }).promise()\n        .then(receivedMsgData => {\n            if (!!(receivedMsgData) && !!(receivedMsgData.Messages)) {\n                let receivedMessages = receivedMsgData.Messages;\n                receivedMessages.forEach(message => {\n                    // your logic to access each message through out the loop. Each message is available under variable message \n                    // within this block\n                    console.log(\"message\");\n                 console.log( message );\n                });\n            } else {\n                // No messages to process\n                    console.log(\"No messages\");\n                // console.log( message );\n            }\n        })\n        .catch(err => {\n            // error handling goes here\n              console.log(\"err\");\n                 console.log( err );\n        });\n\n\n\n    callback(null, { \"message\": \"Successfully LLL executed\" });\n}",
         "config": {
           "runtime": "nodejs8.10",
           "handler": "handler",
@@ -35,7 +35,15 @@
             "resourceName": "apigeuCentral1checkindunilqatstany",
             "config": {}
           }
-        ]
+        ],
+        "testCases": {
+          "6cf1f70e-5b5e-45d6-82d4-10680aaee482": {
+            "id": "6cf1f70e-5b5e-45d6-82d4-10680aaee482",
+            "name": "Unnamed event",
+            "functionId": "6289acab-1bda-4531-867b-3494a3e30ae7",
+            "event": "{\n    \"key1\": \"value1\",\n    \"key2\": \"value2\",\n    \"key3\": \"value3\"\n}"
+          }
+        }
       }
     },
     "deletedFiles": [],
@@ -63,6 +71,33 @@
           "stageName": "test",
           "mode": 0
         }
+      },
+      "sqstest": {
+        "name": "sqstest",
+        "type": "SQS",
+        "config": {
+          "mode": 0,
+          "existing": false,
+          "name": "test",
+          "url": "https://sqs.eu-central-1.amazonaws.com/318300609668/test",
+          "selectedRegion": "eu-central-1",
+          "deliveryDelay": 0,
+          "deliveryDelayUnit": "seconds",
+          "useRedrivePolicy": false,
+          "useSSE": false,
+          "kmsCustomerMasterKey": "default",
+          "accountId": "318300609668",
+          "dataKeyReusePeriod": 5,
+          "queueType": "standardQueue",
+          "defaultVisibilityTimeout": 30,
+          "defaultVisibilityTimeoutUnit": "seconds",
+          "messageRetentionPeriod": 4,
+          "messageRetentionPeriodUnit": "days",
+          "maximumMessageSize": 256,
+          "receiveMessageWaitTime": 0,
+          "deadLetterQueueName": "",
+          "contentBasedDeduplication": false
+        }
       }
     },
     "customTemplate": {
@@ -80,7 +115,22 @@
       }
     ],
     "packageJSON": {
-      "dependencies": {}
+      "dependencies": {
+        "aws-sdk": {
+          "name": "aws-sdk",
+          "language": "javascript",
+          "version": "2.176.0",
+          "dev": true,
+          "notRemovable": false
+        },
+        "slappforge-sdk-aws": {
+          "name": "slappforge-sdk-aws",
+          "language": "javascript",
+          "version": "0.0.5",
+          "dev": false,
+          "notRemovable": false
+        }
+      }
     }
   },
   "PROJECT_META": {
@@ -90,7 +140,7 @@
     "projectRegion": "eu-central-1",
     "platform": "AWS",
     "platformRegions": {},
-    "lastSave": 1561455382162
+    "lastSave": 1562660395686
   },
   "VCS_STATE": {
     "provider": "GitHub",
