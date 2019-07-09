@@ -2,16 +2,15 @@ let AWS = require('aws-sdk');
 let SL_AWS = require('slappforge-sdk-aws');
 const sqs = new SL_AWS.SQS(AWS);
 
-
 exports.handler = function (event, context, callback) {
 
     sqs.receiveAndDeleteMessages({
-        QueueUrl: `https://sqs.${process.env.AWS_REGION}.amazonaws.com/${process.env.SIGMA_AWS_ACC_ID}/samp3`,
+        QueueUrl: `https://sqs.${process.env.AWS_REGION}.amazonaws.com/${process.env.SIGMA_AWS_ACC_ID}/check.fifo`,
         AttributeNames: ['All'],
         MaxNumberOfMessages: '10',
-        VisibilityTimeout: '30',
-        WaitTimeSeconds: '19',
-        MessageAttributeNames: ['10', '20']
+        VisibilityTimeout: '50',
+        WaitTimeSeconds: '10',
+        MessageAttributeNames: ['a', 'b']
     }, function (receivedMessages) {
         console.log("receivedMessages");
                  console.log( receivedMessages );
@@ -23,10 +22,11 @@ exports.handler = function (event, context, callback) {
                  console.log( deleteSuccessData );
         // implement delete success state here
     }, function (error) {
-        console.log(" not Success");
+        console.log("not Success");
                  console.log( error );
         // implement error handling logic here
     });
 
-    callback(null, { "message": "Successfully nw2 executed" });
+
+    callback(null, { "message": "Successfully executed - FIFO nw" });
 }
