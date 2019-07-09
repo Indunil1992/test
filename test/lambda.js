@@ -5,11 +5,11 @@ const sqs = new SL_AWS.SQS(AWS);
 exports.handler = function (event, context, callback) {
     sqs.receiveMessage({
         QueueUrl: `https://sqs.${process.env.AWS_REGION}.amazonaws.com/${process.env.SIGMA_AWS_ACC_ID}/test`,
-        AttributeNames: ['All'],
+        AttributeNames: ['SequenceNumber'],
         MaxNumberOfMessages: '10',
         VisibilityTimeout: '30',
-        WaitTimeSeconds: '0',
-        MessageAttributeNames: ['saaaaa']
+        WaitTimeSeconds: '10',
+        MessageAttributeNames: ['saaaaa', 'kaa']
     }).promise()
         .then(receivedMsgData => {
             if (!!(receivedMsgData) && !!(receivedMsgData.Messages)) {
