@@ -90,22 +90,6 @@
         "shouldPersist": false,
         "displayOnly": false,
         "editable": false
-      },
-      {
-        "lambdaId": "all",
-        "varKey": "as",
-        "varValue": null,
-        "shouldPersist": false,
-        "displayOnly": false,
-        "editable": true
-      },
-      {
-        "lambdaId": "bf338694-e23b-4402-a988-59e54ce27cf1",
-        "varKey": "tes",
-        "varValue": "2",
-        "shouldPersist": true,
-        "displayOnly": false,
-        "editable": true
       }
     ],
     "packageJSON": {
@@ -121,7 +105,7 @@
     "platformRegions": {
       "AWS": "us-east-1"
     },
-    "lastSave": 1568623309106
+    "lastSave": 1568623450623
   },
   "VCS_STATE": {
     "provider": "GitHub",
