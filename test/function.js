@@ -1,4 +1,4 @@
 exports.handler = function(request, response) {
     
-    response.send({"message": "Successfully executed"});
+    response.send({"message": "Successfully executed pubsub"});
 }
