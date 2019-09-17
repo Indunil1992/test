@@ -1,44 +1,45 @@
 {
   "EDITOR_STATE": {
     "allProjectFiles": {
-      "1e554124-d2c1-4daf-a718-67d9349195b8": {
-        "id": "1e554124-d2c1-4daf-a718-67d9349195b8",
+      "65b1b6cd-75fc-4a23-a9ab-6f577c687d00": {
+        "id": "65b1b6cd-75fc-4a23-a9ab-6f577c687d00",
         "parent": null,
         "name": "test",
         "type": "DIRECTORY",
         "isDirectory": true,
         "children": [
-          "bf338694-e23b-4402-a988-59e54ce27cf1"
+          "9c2356a9-6803-4f47-8cb0-afdac897ae5c",
+          "9d717ed4-1e5f-442e-aff3-423f981d35c5"
         ],
         "isRemovable": false,
         "filePath": "test"
       },
-      "bf338694-e23b-4402-a988-59e54ce27cf1": {
-        "id": "bf338694-e23b-4402-a988-59e54ce27cf1",
-        "parent": "1e554124-d2c1-4daf-a718-67d9349195b8",
+      "9c2356a9-6803-4f47-8cb0-afdac897ae5c": {
+        "id": "9c2356a9-6803-4f47-8cb0-afdac897ae5c",
+        "parent": "65b1b6cd-75fc-4a23-a9ab-6f577c687d00",
         "name": "function.js",
         "type": "JS_LAMBDA",
         "isDirectory": false,
         "children": [],
         "isRemovable": true,
         "filePath": "test/function.js",
-        "code": "exports.handler = function(request, response) {\n    \n    response.send({\"message\": \"Successfully executed pubsub\"});\n}",
+        "code": "let google = require('googleapis').google;\nlet _auth = require('./Authorizer');\nconst storage = google.storage('v1');\n\nexports.handler = function (request, response) {\n    storage.objects.list({\n        bucket: 'induniltest1',\n        maxResults: 10,\n        prefix: '2'\n    })\n        .then(response => {\n            console.log(response.data);           // successful response\n            console.log(\"okkkkk\");\n            /*\n    \n            WARNING: response.data.items will be missing altogether (instead of being empty) if there are no matches!  \n    \n            response.data = {\n                \"kind\": \"storage#objects\",\n                \"items\": [\n                    {\n                        \"kind\": \"storage#object\",\n                        \"id\": \"<bucket>/<object>/<timestamp>\",\n                        \"selfLink\": \"https://www.googleapis.com/storage/v1/b/<bucket>/o/<object>\",\n                        \"name\": \"<object>\",\n                        \"bucket\": \"<bucket>\",\n                        \"contentType\": \"<content-type>\",\n                        \"timeCreated\": \"<yyyy-MM-ddTHH:mm:ss.###Z>\",\n                        \"updated\": \"<yyyy-MM-ddTHH:mm:ss.###Z>\",\n                        \"size\": \"<bytes>\",\n                        \"md5Hash\": \"<hash>\",\n                        \"metadata\": {\n                            \"<key1>\": \"<val1>\",\n                            \"<key2>\": \"<val2>\"\n                        },\n                        \"crc32c\": \"<crc>\",\n                        \"etag\": \"<etag>\"\n                        // , ...\n                    }\n                    // , ...\n                ]\n            }\n            */\n        })\n        .catch(err => {\n             console.log(\"errr\");\n            console.log(err, err.stack); // an error occurred\n        });\n\n    response.send({ \"message\": \"Successfully executed\" });\n}",
         "config": {
           "runtime": "nodejs8",
           "timeout": 60,
           "memory": 128,
-          "triggerType": 1,
+          "triggerType": 0,
           "handler": "handler"
         },
         "triggers": [
           {
-            "resourceName": "pubsubcloudBuilds",
+            "resourceName": "http-trigger",
             "config": {}
           }
         ]
       },
-      "32935a0e-201e-41c4-ab1c-fbd696ffe427": {
-        "id": "32935a0e-201e-41c4-ab1c-fbd696ffe427",
+      "7c821e37-79a7-462c-95e1-bdf890c26097": {
+        "id": "7c821e37-79a7-462c-95e1-bdf890c26097",
         "parent": null,
         "name": "index.js",
         "type": "JS_FILE",
@@ -48,8 +49,8 @@
         "filePath": "index.js",
         "code": "// This file is used to register all your cloud functions in GCP.\n// DO NOT EDIT/DELETE THIS, UNLESS YOU KNOW WHAT YOU ARE DOING.\n\nexports.testfunction = require(\"./test/function.js\").handler;"
       },
-      "171c23ce-1e3d-46b3-9a64-16f98895ef01": {
-        "id": "171c23ce-1e3d-46b3-9a64-16f98895ef01",
+      "e31c061f-776b-468d-93c1-0251d4d5ae91": {
+        "id": "e31c061f-776b-468d-93c1-0251d4d5ae91",
         "parent": null,
         "name": "main.py",
         "type": "PYTHON_FILE",
@@ -58,22 +59,37 @@
         "isRemovable": false,
         "filePath": "main.py",
         "code": "# This file is used to register all your cloud functions in GCP.\n# DO NOT EDIT/DELETE THIS, UNLESS YOU KNOW WHAT YOU ARE DOING.\n\n"
+      },
+      "9d717ed4-1e5f-442e-aff3-423f981d35c5": {
+        "id": "9d717ed4-1e5f-442e-aff3-423f981d35c5",
+        "parent": "65b1b6cd-75fc-4a23-a9ab-6f577c687d00",
+        "name": "Authorizer.js",
+        "type": "JS_FILE",
+        "isDirectory": false,
+        "children": [],
+        "isRemovable": true,
+        "filePath": "test/Authorizer.js",
+        "code": "const google = require(\"googleapis\").google;\n\ngoogle.options({auth: new google.auth.Compute()});"
       }
     },
-    "rootNode": "1e554124-d2c1-4daf-a718-67d9349195b8",
+    "rootNode": "65b1b6cd-75fc-4a23-a9ab-6f577c687d00",
     "openFiles": [
-      "bf338694-e23b-4402-a988-59e54ce27cf1"
+      "9c2356a9-6803-4f47-8cb0-afdac897ae5c"
     ],
-    "currentFileId": "bf338694-e23b-4402-a988-59e54ce27cf1",
+    "currentFileId": "9c2356a9-6803-4f47-8cb0-afdac897ae5c",
     "resources": {
-      "pubsubcloudBuilds": {
-        "name": "pubsubcloudBuilds",
-        "type": "pubsub",
+      "http-trigger": {
+        "name": "http-trigger",
+        "type": "http-trigger",
+        "config": {}
+      },
+      "storageinduniltest1": {
+        "name": "storageinduniltest1",
+        "type": "storage",
         "config": {
           "mode": 1,
-          "topic": {
-            "name": "cloud-builds",
-            "subscriptions": []
+          "bucket": {
+            "name": "induniltest1"
           }
         }
       }
@@ -82,18 +98,17 @@
       "dialect": null,
       "definitions": null
     },
-    "envVariables": [
-      {
-        "lambdaId": "all",
-        "varKey": "AWS_REGION",
-        "varValue": null,
-        "shouldPersist": false,
-        "displayOnly": false,
-        "editable": false
-      }
-    ],
+    "envVariables": [],
     "packageJSON": {
-      "dependencies": {}
+      "dependencies": {
+        "googleapis": {
+          "name": "googleapis",
+          "language": "javascript",
+          "version": "29.0.0",
+          "dev": false,
+          "notRemovable": false
+        }
+      }
     }
   },
   "PROJECT_META": {
@@ -102,10 +117,8 @@
     "projectVersion": "1.0.0",
     "projectRegion": "us-east1",
     "platform": "GCP",
-    "platformRegions": {
-      "AWS": "us-east-1"
-    },
-    "lastSave": 1568623450623
+    "platformRegions": {},
+    "lastSave": 1568703682455
   },
   "VCS_STATE": {
     "provider": "GitHub",
