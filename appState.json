@@ -1,91 +1,130 @@
 {
   "EDITOR_STATE": {
     "allProjectFiles": {
-      "65b1b6cd-75fc-4a23-a9ab-6f577c687d00": {
-        "id": "65b1b6cd-75fc-4a23-a9ab-6f577c687d00",
+      "9055d2e9-b4d8-4ef7-b4a2-dd8404692ac6": {
+        "id": "9055d2e9-b4d8-4ef7-b4a2-dd8404692ac6",
         "parent": null,
         "name": "test",
         "type": "DIRECTORY",
         "isDirectory": true,
         "children": [
-          "9c2356a9-6803-4f47-8cb0-afdac897ae5c",
-          "9d717ed4-1e5f-442e-aff3-423f981d35c5"
+          "1313ee67-1f04-4e84-b056-c2f8400b24a6",
+          "1b2b0b17-7cb8-4055-8d7a-1c77fe2e12e2",
+          "42614b48-44c9-4e2f-9f38-b49ab33f2114"
         ],
         "isRemovable": false,
         "filePath": "test"
       },
-      "9c2356a9-6803-4f47-8cb0-afdac897ae5c": {
-        "id": "9c2356a9-6803-4f47-8cb0-afdac897ae5c",
-        "parent": "65b1b6cd-75fc-4a23-a9ab-6f577c687d00",
-        "name": "function.js",
+      "1313ee67-1f04-4e84-b056-c2f8400b24a6": {
+        "id": "1313ee67-1f04-4e84-b056-c2f8400b24a6",
+        "parent": "9055d2e9-b4d8-4ef7-b4a2-dd8404692ac6",
+        "name": "lambda.js",
         "type": "JS_LAMBDA",
         "isDirectory": false,
         "children": [],
         "isRemovable": true,
-        "filePath": "test/function.js",
-        "code": "let google = require('googleapis').google;\nlet _auth = require('./Authorizer');\nconst pubsub = google.pubsub('v1');\n\nexports.handler = function (request, response) {\n    pubsub.projects.topics.subscriptions.list({\n        topic: `projects/${process.env.GCP_PROJECT}/topics/cloud-builds`,\n        pageSize: 10\n    })\n        .then(response => {\n            console.log(response.data);  // successful response\n            /*\n            response.data = {\n                \"subscriptions\": [\n                    \"projects/<project>/subscriptions/<subscription-1>\",\n                    \"projects/<project>/subscriptions/<subscription-2>\",\n                    ...\n                ]\n            }\n            */\n        })\n        .catch(err => {\n            console.log(err, err.stack); // an error occurred\n        });\n\n    response.send({ \"message\": \"Successfully executed\" });\n}",
+        "filePath": "test/lambda.js",
+        "code": "exports.handler = function(event, context, callback) {\n    \n    callback(null, {\"message\": \"Successfully executed\"});\n}",
         "config": {
-          "runtime": "nodejs8",
+          "runtime": "nodejs8.10",
+          "handler": "handler",
           "timeout": 60,
           "memory": 128,
-          "triggerType": 1,
-          "handler": "handler"
+          "layers": []
+        },
+        "triggers": [],
+        "testCases": {
+          "3daa1733-4a00-44ac-ba8b-c7864982df15": {
+            "id": "3daa1733-4a00-44ac-ba8b-c7864982df15",
+            "name": "Test event",
+            "functionId": "1313ee67-1f04-4e84-b056-c2f8400b24a6",
+            "event": "{\r\n    \"key1\": \"value1\",\r\n    \"key2\": \"value2\",\r\n    \"key3\": \"value3\"\r\n}",
+            "eventTemplate": "hello-world"
+          }
+        }
+      },
+      "1b2b0b17-7cb8-4055-8d7a-1c77fe2e12e2": {
+        "id": "1b2b0b17-7cb8-4055-8d7a-1c77fe2e12e2",
+        "parent": "9055d2e9-b4d8-4ef7-b4a2-dd8404692ac6",
+        "name": "python.py",
+        "type": "PYTHON_LAMBDA",
+        "isDirectory": false,
+        "children": [],
+        "isRemovable": true,
+        "filePath": "test/python.py",
+        "code": "import boto3\ns3 = boto3.client(\"s3\")\n\ndef handler(event, context):\n    try:\n        data = s3.list_objects(\n            Bucket='as2-test-lahiru',\n            MaxKeys=10,\n            Prefix='1'\n        )\n    \n        \"\"\"\n        data = {\n            \"Contents\": [\n               {\n                  \"ETag\": \"\\\"70ee1738b6b21e2c8a43f3a5ab0eee71\\\"\",\n                  \"Key\": \"example1.jpg\",\n                  \"LastModified\": \"<Date Representation>\",\n                  \"Owner\": {\n                     \"DisplayName\": \"myname\",\n                     \"ID\": \"12345example25102679df27bb0ae12b3f85be6f290b936c4393484be31bebcc\"\n                  },\n                  \"Size\": 11,\n                  \"StorageClass\": \"STANDARD\"\n               },\n               # {...}\n           ]\n        }\n        \"\"\"\n    except BaseException as e:\n        print(e)\n\n    print(\"hello world\");\n    return {\"message\": \"Successfully executed\"}\n",
+        "config": {
+          "runtime": "python2.7",
+          "handler": "handler",
+          "timeout": 60,
+          "memory": 128,
+          "layers": []
         },
         "triggers": [
           {
-            "resourceName": "pubsubcloudBuilds",
+            "resourceName": "apigusEast1TestAPIMyLambdaput",
             "config": {}
           }
         ]
       },
-      "7c821e37-79a7-462c-95e1-bdf890c26097": {
-        "id": "7c821e37-79a7-462c-95e1-bdf890c26097",
-        "parent": null,
-        "name": "index.js",
-        "type": "JS_FILE",
-        "isDirectory": false,
-        "children": [],
-        "isRemovable": false,
-        "filePath": "index.js",
-        "code": "// This file is used to register all your cloud functions in GCP.\n// DO NOT EDIT/DELETE THIS, UNLESS YOU KNOW WHAT YOU ARE DOING.\n\nexports.testfunction = require(\"./test/function.js\").handler;"
-      },
-      "e31c061f-776b-468d-93c1-0251d4d5ae91": {
-        "id": "e31c061f-776b-468d-93c1-0251d4d5ae91",
-        "parent": null,
-        "name": "main.py",
+      "42614b48-44c9-4e2f-9f38-b49ab33f2114": {
+        "id": "42614b48-44c9-4e2f-9f38-b49ab33f2114",
+        "parent": "9055d2e9-b4d8-4ef7-b4a2-dd8404692ac6",
+        "name": "__init__.py",
         "type": "PYTHON_FILE",
         "isDirectory": false,
         "children": [],
-        "isRemovable": false,
-        "filePath": "main.py",
-        "code": "# This file is used to register all your cloud functions in GCP.\n# DO NOT EDIT/DELETE THIS, UNLESS YOU KNOW WHAT YOU ARE DOING.\n\n"
-      },
-      "9d717ed4-1e5f-442e-aff3-423f981d35c5": {
-        "id": "9d717ed4-1e5f-442e-aff3-423f981d35c5",
-        "parent": "65b1b6cd-75fc-4a23-a9ab-6f577c687d00",
-        "name": "Authorizer.js",
-        "type": "JS_FILE",
-        "isDirectory": false,
-        "children": [],
         "isRemovable": true,
-        "filePath": "test/Authorizer.js",
-        "code": "const google = require(\"googleapis\").google;\n\ngoogle.options({auth: new google.auth.Compute()});"
+        "filePath": "test/__init__.py",
+        "code": ""
       }
     },
-    "rootNode": "65b1b6cd-75fc-4a23-a9ab-6f577c687d00",
+    "rootNode": "9055d2e9-b4d8-4ef7-b4a2-dd8404692ac6",
     "openFiles": [
-      "9c2356a9-6803-4f47-8cb0-afdac897ae5c"
+      "1313ee67-1f04-4e84-b056-c2f8400b24a6",
+      "1b2b0b17-7cb8-4055-8d7a-1c77fe2e12e2"
     ],
-    "currentFileId": "9c2356a9-6803-4f47-8cb0-afdac897ae5c",
+    "currentFileId": "1b2b0b17-7cb8-4055-8d7a-1c77fe2e12e2",
     "resources": {
-      "pubsubcloudBuilds": {
-        "name": "pubsubcloudBuilds",
-        "type": "pubsub",
+      "apigusEast1TestAPIMyLambdaput": {
+        "name": "apigusEast1TestAPIMyLambdaput",
+        "type": "API_GATEWAY",
+        "config": {
+          "selectedRegion": "us-east-1",
+          "apiMode": 1,
+          "apiName": "TestAPI",
+          "apiId": "0itznun7w3",
+          "endpointType": "EDGE",
+          "rootResourceId": "h2lelj6j7k",
+          "existingResources": {
+            "/MyLambda": "98nqbj",
+            "/": "h2lelj6j7k",
+            "/newchange/test": "k6pdhn",
+            "/newchange": "q1ox7l",
+            "/testWithSlash": "q4m4g1",
+            "/testtwospeciallambda": "q4szm3",
+            "/testtwospecialkumutest": "wey3lk"
+          },
+          "resourceMode": 1,
+          "resourcePath": "/MyLambda",
+          "resourceName": "MyLambda",
+          "resourceId": "98nqbj",
+          "restMethod": "PUT",
+          "proxyIntegration": false,
+          "enableCORS": false,
+          "stageMode": 0,
+          "stageName": "test123",
+          "mode": 1
+        }
+      },
+      "s3as2TestLahiru": {
+        "name": "s3as2TestLahiru",
+        "type": "S3",
         "config": {
           "mode": 1,
-          "topic": {
-            "name": "cloud-builds",
-            "subscriptions": []
+          "bucket": {
+            "region": "us-east-1",
+            "name": "as2-test-lahiru"
           }
         }
       }
@@ -97,20 +136,28 @@
     "envVariables": [
       {
         "lambdaId": "all",
-        "varKey": "AWS_REGION",
+        "varKey": "SIGMA_AWS_ACC_ID",
         "varValue": null,
         "shouldPersist": false,
         "displayOnly": false,
         "editable": false
+      },
+      {
+        "lambdaId": "1b2b0b17-7cb8-4055-8d7a-1c77fe2e12e2",
+        "varKey": "PYTHONPATH",
+        "varValue": "/var/runtime:/var/task/test",
+        "shouldPersist": true,
+        "displayOnly": false,
+        "editable": true
       }
     ],
     "packageJSON": {
       "dependencies": {
-        "googleapis": {
-          "name": "googleapis",
-          "language": "javascript",
-          "version": "29.0.0",
-          "dev": false,
+        "boto3": {
+          "name": "boto3",
+          "language": "python",
+          "version": "1.9.6",
+          "dev": true,
           "notRemovable": false
         }
       }
@@ -120,12 +167,10 @@
     "projectName": "test",
     "projectDescription": "",
     "projectVersion": "1.0.0",
-    "projectRegion": "us-east1",
-    "platform": "GCP",
-    "platformRegions": {
-      "AWS": "us-east-1"
-    },
-    "lastSave": 1568706508683
+    "projectRegion": "us-east-1",
+    "platform": "AWS",
+    "platformRegions": {},
+    "lastSave": 1569238661034
   },
   "VCS_STATE": {
     "provider": "GitHub",
