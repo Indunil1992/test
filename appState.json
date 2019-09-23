@@ -52,7 +52,7 @@
         "children": [],
         "isRemovable": true,
         "filePath": "test/python.py",
-        "code": "import boto3\ns3 = boto3.client(\"s3\")\n\ndef handler(event, context):\n    try:\n        data = s3.list_objects(\n            Bucket='as2-test-lahiru',\n            MaxKeys=10,\n            Prefix='1'\n        )\n    \n        \"\"\"\n        data = {\n            \"Contents\": [\n               {\n                  \"ETag\": \"\\\"70ee1738b6b21e2c8a43f3a5ab0eee71\\\"\",\n                  \"Key\": \"example1.jpg\",\n                  \"LastModified\": \"<Date Representation>\",\n                  \"Owner\": {\n                     \"DisplayName\": \"myname\",\n                     \"ID\": \"12345example25102679df27bb0ae12b3f85be6f290b936c4393484be31bebcc\"\n                  },\n                  \"Size\": 11,\n                  \"StorageClass\": \"STANDARD\"\n               },\n               # {...}\n           ]\n        }\n        \"\"\"\n    except BaseException as e:\n        print(e)\n\n    print(\"hello world\");\n    return {\"message\": \"Successfully executed\"}\n",
+        "code": "\ndef handler(event, context):\n\n    print(\"hello world\")\n    return {\"message\": \"Successfully executed\"}\n",
         "config": {
           "runtime": "python2.7",
           "handler": "handler",
@@ -113,7 +113,7 @@
           "proxyIntegration": false,
           "enableCORS": false,
           "stageMode": 0,
-          "stageName": "test123",
+          "stageName": "test100",
           "mode": 1
         }
       },
@@ -170,7 +170,7 @@
     "projectRegion": "us-east-1",
     "platform": "AWS",
     "platformRegions": {},
-    "lastSave": 1569238661034
+    "lastSave": 1569239184242
   },
   "VCS_STATE": {
     "provider": "GitHub",
