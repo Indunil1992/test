@@ -1,30 +1,28 @@
 {
   "EDITOR_STATE": {
     "allProjectFiles": {
-      "9055d2e9-b4d8-4ef7-b4a2-dd8404692ac6": {
-        "id": "9055d2e9-b4d8-4ef7-b4a2-dd8404692ac6",
+      "9bc8c305-8afe-4fd3-8531-93b57670e334": {
+        "id": "9bc8c305-8afe-4fd3-8531-93b57670e334",
         "parent": null,
         "name": "test",
         "type": "DIRECTORY",
         "isDirectory": true,
         "children": [
-          "1313ee67-1f04-4e84-b056-c2f8400b24a6",
-          "1b2b0b17-7cb8-4055-8d7a-1c77fe2e12e2",
-          "42614b48-44c9-4e2f-9f38-b49ab33f2114"
+          "50a3ad1e-7eac-461e-981c-5231e45de28c"
         ],
         "isRemovable": false,
         "filePath": "test"
       },
-      "1313ee67-1f04-4e84-b056-c2f8400b24a6": {
-        "id": "1313ee67-1f04-4e84-b056-c2f8400b24a6",
-        "parent": "9055d2e9-b4d8-4ef7-b4a2-dd8404692ac6",
+      "50a3ad1e-7eac-461e-981c-5231e45de28c": {
+        "id": "50a3ad1e-7eac-461e-981c-5231e45de28c",
+        "parent": "9bc8c305-8afe-4fd3-8531-93b57670e334",
         "name": "lambda.js",
         "type": "JS_LAMBDA",
         "isDirectory": false,
         "children": [],
         "isRemovable": true,
         "filePath": "test/lambda.js",
-        "code": "exports.handler = function(event, context, callback) {\n    \n    callback(null, {\"message\": \"Successfully executed\"});\n}",
+        "code": "let AWS = require('aws-sdk');\nconst s3 = new AWS.S3();\n\nexports.handler = function (event, context, callback) {\n    s3.getObject({\n        'Bucket': \"indunil.trigger\",\n        'Key': \"1\"\n    }).promise()\n        .then(data => {\n            console.log(data);           // successful response\n            /*\n            data = {\n                AcceptRanges: \"bytes\", \n                ContentLength: 3191, \n                ContentType: \"image/jpeg\", \n                ETag: \"\\\"6805f2cfc46c0f04559748bb039d69ae\\\"\", \n                LastModified: \"<Date Representation>\", \n                Metadata: {}, \n                TagCount: 2, \n                VersionId: \"null\"\n            }\n            */\n        })\n        .catch(err => {\n            console.log(err, err.stack); // an error occurred\n        });\n\n    callback(null, { \"message\": \"Successfully executed\" });\n}",
         "config": {
           "runtime": "nodejs8.10",
           "handler": "handler",
@@ -32,99 +30,64 @@
           "memory": 128,
           "layers": []
         },
-        "triggers": [],
+        "triggers": [
+          {
+            "resourceName": "apigusEast1sachithraAPInamehiruidneeput",
+            "config": {}
+          }
+        ],
         "testCases": {
-          "3daa1733-4a00-44ac-ba8b-c7864982df15": {
-            "id": "3daa1733-4a00-44ac-ba8b-c7864982df15",
+          "f231e70b-043e-4435-9b7d-70fcc476a9f6": {
+            "id": "f231e70b-043e-4435-9b7d-70fcc476a9f6",
             "name": "Test event",
-            "functionId": "1313ee67-1f04-4e84-b056-c2f8400b24a6",
+            "functionId": "50a3ad1e-7eac-461e-981c-5231e45de28c",
             "event": "{\r\n    \"key1\": \"value1\",\r\n    \"key2\": \"value2\",\r\n    \"key3\": \"value3\"\r\n}",
             "eventTemplate": "hello-world"
           }
         }
-      },
-      "1b2b0b17-7cb8-4055-8d7a-1c77fe2e12e2": {
-        "id": "1b2b0b17-7cb8-4055-8d7a-1c77fe2e12e2",
-        "parent": "9055d2e9-b4d8-4ef7-b4a2-dd8404692ac6",
-        "name": "python.py",
-        "type": "PYTHON_LAMBDA",
-        "isDirectory": false,
-        "children": [],
-        "isRemovable": true,
-        "filePath": "test/python.py",
-        "code": "\ndef handler(event, context):\n\n    print(\"hello world\")\n    return {\"message\": \"Successfully executed\"}\n",
-        "config": {
-          "runtime": "python2.7",
-          "handler": "handler",
-          "timeout": 60,
-          "memory": 128,
-          "layers": []
-        },
-        "triggers": [
-          {
-            "resourceName": "apigusEast1TestAPIMyLambdaput",
-            "config": {}
-          }
-        ]
-      },
-      "42614b48-44c9-4e2f-9f38-b49ab33f2114": {
-        "id": "42614b48-44c9-4e2f-9f38-b49ab33f2114",
-        "parent": "9055d2e9-b4d8-4ef7-b4a2-dd8404692ac6",
-        "name": "__init__.py",
-        "type": "PYTHON_FILE",
-        "isDirectory": false,
-        "children": [],
-        "isRemovable": true,
-        "filePath": "test/__init__.py",
-        "code": ""
       }
     },
-    "rootNode": "9055d2e9-b4d8-4ef7-b4a2-dd8404692ac6",
+    "rootNode": "9bc8c305-8afe-4fd3-8531-93b57670e334",
     "openFiles": [
-      "1313ee67-1f04-4e84-b056-c2f8400b24a6",
-      "1b2b0b17-7cb8-4055-8d7a-1c77fe2e12e2"
+      "50a3ad1e-7eac-461e-981c-5231e45de28c"
     ],
-    "currentFileId": "1b2b0b17-7cb8-4055-8d7a-1c77fe2e12e2",
+    "currentFileId": "50a3ad1e-7eac-461e-981c-5231e45de28c",
     "resources": {
-      "apigusEast1TestAPIMyLambdaput": {
-        "name": "apigusEast1TestAPIMyLambdaput",
+      "apigusEast1sachithraAPInamehiruidneeput": {
+        "name": "apigusEast1sachithraAPInamehiruidneeput",
         "type": "API_GATEWAY",
         "config": {
           "selectedRegion": "us-east-1",
           "apiMode": 1,
-          "apiName": "TestAPI",
-          "apiId": "0itznun7w3",
-          "endpointType": "EDGE",
-          "rootResourceId": "h2lelj6j7k",
+          "apiName": "sachithraAPIname",
+          "apiId": "052p9kjn18",
+          "endpointType": "REGIONAL",
+          "rootResourceId": "zrjp6rdv3b",
           "existingResources": {
-            "/MyLambda": "98nqbj",
-            "/": "h2lelj6j7k",
-            "/newchange/test": "k6pdhn",
-            "/newchange": "q1ox7l",
-            "/testWithSlash": "q4m4g1",
-            "/testtwospeciallambda": "q4szm3",
-            "/testtwospecialkumutest": "wey3lk"
+            "/hiruidnee": "mdiuqa",
+            "/": "zrjp6rdv3b"
           },
           "resourceMode": 1,
-          "resourcePath": "/MyLambda",
-          "resourceName": "MyLambda",
-          "resourceId": "98nqbj",
+          "resourcePath": "/hiruidnee",
+          "resourceName": "hiruidnee",
+          "resourceId": "mdiuqa",
           "restMethod": "PUT",
           "proxyIntegration": false,
           "enableCORS": false,
-          "stageMode": 0,
-          "stageName": "test100",
+          "stageMode": 1,
+          "stageName": "Test",
+          "stageDeploymentId": "2xlq8e",
           "mode": 1
         }
       },
-      "s3as2TestLahiru": {
-        "name": "s3as2TestLahiru",
+      "s3induniltrigger": {
+        "name": "s3induniltrigger",
         "type": "S3",
         "config": {
           "mode": 1,
           "bucket": {
             "region": "us-east-1",
-            "name": "as2-test-lahiru"
+            "name": "indunil.trigger"
           }
         }
       }
@@ -141,22 +104,14 @@
         "shouldPersist": false,
         "displayOnly": false,
         "editable": false
-      },
-      {
-        "lambdaId": "1b2b0b17-7cb8-4055-8d7a-1c77fe2e12e2",
-        "varKey": "PYTHONPATH",
-        "varValue": "/var/runtime:/var/task/test",
-        "shouldPersist": true,
-        "displayOnly": false,
-        "editable": true
       }
     ],
     "packageJSON": {
       "dependencies": {
-        "boto3": {
-          "name": "boto3",
-          "language": "python",
-          "version": "1.9.6",
+        "aws-sdk": {
+          "name": "aws-sdk",
+          "language": "javascript",
+          "version": "2.176.0",
           "dev": true,
           "notRemovable": false
         }
@@ -170,7 +125,7 @@
     "projectRegion": "us-east-1",
     "platform": "AWS",
     "platformRegions": {},
-    "lastSave": 1569239184242
+    "lastSave": 1572608617504
   },
   "VCS_STATE": {
     "provider": "GitHub",
