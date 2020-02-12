@@ -1,30 +1,29 @@
 {
   "EDITOR_STATE": {
     "allProjectFiles": {
-      "9bc8c305-8afe-4fd3-8531-93b57670e334": {
-        "id": "9bc8c305-8afe-4fd3-8531-93b57670e334",
+      "ada8737b-587f-4b8a-a1ce-0cafeb178164": {
+        "id": "ada8737b-587f-4b8a-a1ce-0cafeb178164",
         "parent": null,
         "name": "test",
         "type": "DIRECTORY",
         "isDirectory": true,
         "children": [
-          "50a3ad1e-7eac-461e-981c-5231e45de28c"
+          "f3ec7dae-0161-4ab3-b870-00298f58788e"
         ],
         "isRemovable": false,
         "filePath": "test"
       },
-      "50a3ad1e-7eac-461e-981c-5231e45de28c": {
-        "id": "50a3ad1e-7eac-461e-981c-5231e45de28c",
-        "parent": "9bc8c305-8afe-4fd3-8531-93b57670e334",
+      "f3ec7dae-0161-4ab3-b870-00298f58788e": {
+        "id": "f3ec7dae-0161-4ab3-b870-00298f58788e",
+        "parent": "ada8737b-587f-4b8a-a1ce-0cafeb178164",
         "name": "lambda.js",
         "type": "JS_LAMBDA",
         "isDirectory": false,
         "children": [],
         "isRemovable": true,
         "filePath": "test/lambda.js",
-        "code": "let AWS = require('aws-sdk');\nconst s3 = new AWS.S3();\n\nexports.handler = function (event, context, callback) {\n    s3.getObject({\n        'Bucket': \"indunil.trigger\",\n        'Key': \"1\"\n    }).promise()\n        .then(data => {\n            console.log(data);           // successful response\n            /*\n            data = {\n                AcceptRanges: \"bytes\", \n                ContentLength: 3191, \n                ContentType: \"image/jpeg\", \n                ETag: \"\\\"6805f2cfc46c0f04559748bb039d69ae\\\"\", \n                LastModified: \"<Date Representation>\", \n                Metadata: {}, \n                TagCount: 2, \n                VersionId: \"null\"\n            }\n            */\n        })\n        .catch(err => {\n            console.log(err, err.stack); // an error occurred\n        });\n\n    callback(null, { \"message\": \"Successfully executed\" });\n}",
         "config": {
-          "runtime": "nodejs8.10",
+          "runtime": "nodejs10.x",
           "handler": "handler",
           "timeout": 60,
           "memory": 128,
@@ -32,29 +31,20 @@
         },
         "triggers": [
           {
-            "resourceName": "apigusEast1sachithraAPInamehiruidneeput",
+            "resourceName": "apigusEast1sachithraAPInameqaindupost",
             "config": {}
           }
-        ],
-        "testCases": {
-          "f231e70b-043e-4435-9b7d-70fcc476a9f6": {
-            "id": "f231e70b-043e-4435-9b7d-70fcc476a9f6",
-            "name": "Test event",
-            "functionId": "50a3ad1e-7eac-461e-981c-5231e45de28c",
-            "event": "{\r\n    \"key1\": \"value1\",\r\n    \"key2\": \"value2\",\r\n    \"key3\": \"value3\"\r\n}",
-            "eventTemplate": "hello-world"
-          }
-        }
+        ]
       }
     },
-    "rootNode": "9bc8c305-8afe-4fd3-8531-93b57670e334",
+    "rootNode": "ada8737b-587f-4b8a-a1ce-0cafeb178164",
     "openFiles": [
-      "50a3ad1e-7eac-461e-981c-5231e45de28c"
+      "f3ec7dae-0161-4ab3-b870-00298f58788e"
     ],
-    "currentFileId": "50a3ad1e-7eac-461e-981c-5231e45de28c",
+    "currentFileId": "f3ec7dae-0161-4ab3-b870-00298f58788e",
     "resources": {
-      "apigusEast1sachithraAPInamehiruidneeput": {
-        "name": "apigusEast1sachithraAPInamehiruidneeput",
+      "apigusEast1sachithraAPInameqaindupost": {
+        "name": "apigusEast1sachithraAPInameqaindupost",
         "type": "API_GATEWAY",
         "config": {
           "selectedRegion": "us-east-1",
@@ -64,31 +54,22 @@
           "endpointType": "REGIONAL",
           "rootResourceId": "zrjp6rdv3b",
           "existingResources": {
-            "/hiruidnee": "mdiuqa",
+            "/qa/indu": "0j9rt3",
+            "/1111": "0rjsnt",
+            "/qa": "d6y9e8",
             "/": "zrjp6rdv3b"
           },
           "resourceMode": 1,
-          "resourcePath": "/hiruidnee",
-          "resourceName": "hiruidnee",
-          "resourceId": "mdiuqa",
-          "restMethod": "PUT",
+          "resourcePath": "/qa/indu",
+          "resourceName": "qa/indu",
+          "resourceId": "0j9rt3",
+          "restMethod": "POST",
           "proxyIntegration": false,
           "enableCORS": false,
           "stageMode": 1,
           "stageName": "Test",
-          "stageDeploymentId": "2xlq8e",
+          "stageDeploymentId": "072ltp",
           "mode": 1
-        }
-      },
-      "s3induniltrigger": {
-        "name": "s3induniltrigger",
-        "type": "S3",
-        "config": {
-          "mode": 1,
-          "bucket": {
-            "region": "us-east-1",
-            "name": "indunil.trigger"
-          }
         }
       }
     },
@@ -107,15 +88,7 @@
       }
     ],
     "packageJSON": {
-      "dependencies": {
-        "aws-sdk": {
-          "name": "aws-sdk",
-          "language": "javascript",
-          "version": "2.176.0",
-          "dev": true,
-          "notRemovable": false
-        }
-      }
+      "dependencies": {}
     }
   },
   "PROJECT_META": {
@@ -125,7 +98,7 @@
     "projectRegion": "us-east-1",
     "platform": "AWS",
     "platformRegions": {},
-    "lastSave": 1572608617504
+    "lastSave": 1581486913900
   },
   "VCS_STATE": {
     "provider": "GitHub",
